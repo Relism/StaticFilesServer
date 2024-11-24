@@ -35,7 +35,6 @@ public class FilesServer {
         server.createContext("/", new HomePageHandler());
         server.createContext("/static", new StaticFileHandler(staticFilesDir));
 
-        // Use a thread pool to handle concurrent requests
         ExecutorService executor = Executors.newFixedThreadPool(10);
         server.setExecutor(executor);
 
