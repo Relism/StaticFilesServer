@@ -2,6 +2,10 @@
 
 StaticFileServer is an all-in-one JAR-bundled web server designed to serve assets and large files effortlessly. It uses [Flash](https://github.com/Pixel-Services/flash) for the backend and React + TailwindCSS for the frontend, making it lightweight, efficient, and easy to use.
 
+Here's a preview of the web interface:
+
+![StaticFileServer Screenshot](https://static.pixel-services.com/static/assets/relism/github/screenshots/staticfileserver_screenshot.png)
+
 ---
 
 ## 🌟 Features
@@ -66,12 +70,6 @@ title: "Static Files Server" # Title of the website
 ```
 
 Make sure that filesDir points to a valid directory with read access.
-
-## Screenshots 🖼️
-
-Here's a preview of the web interface:
-
-![StaticFileServer Screenshot](https://static.pixel-services.com/static/assets/relism/github/screenshots/staticfileserver_screenshot.png)
 
 ### License
 
