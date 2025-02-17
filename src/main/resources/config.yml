@@ -1,2 +1,12 @@
-staticFilesDir: "/path/to/static/files"
-staticFilesEndpoint: "/static"
+################################################################################
+# +--------------------------------------------------------------------------+ #
+# |                  Static Files Server (powered by Flash)                  | #
+# |                          Made with <3 by Relism                          | #
+# +--------------------------------------------------------------------------+ #
+################################################################################
+
+serverPort : 8080                 # Port on which the server will run
+filesDir : "/path/to/your/files"  # Directory where the files are stored
+logoUrl: ""                       # URL to the logo image (can point to the server itself)
+faviconUrl: ""                    # URL to the favicon image (can point to the server itself)
+title: "Static Files Server"      # Title of the website

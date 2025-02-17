@@ -1,12 +1,12 @@
 package net.relismdev.handlers.api;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.pixelservices.flash.components.RequestHandler;
 import com.pixelservices.flash.lifecycle.Request;
 import com.pixelservices.flash.lifecycle.Response;
 import com.pixelservices.flash.models.HttpMethod;
 import com.pixelservices.flash.models.RouteInfo;
+import com.pixelservices.flash.shaded.org.json.JSONArray;
+import com.pixelservices.flash.shaded.org.json.JSONObject;
 import net.relismdev.FilesServer;
 
 import java.io.File;
@@ -51,48 +51,46 @@ public class FilesApiHandler extends RequestHandler {
             if (!requestedFile.exists()) {
                 res.status(404);
                 res.type("application/json");
-                return "{\"error\":\"Not found\"}";
+                return new JSONObject().put("error", "Not found").toString();
             }
-
-            Gson gson = new GsonBuilder().create();
 
             if (requestedFile.isDirectory()) {
                 File[] files = requestedFile.listFiles();
                 if (files == null) {
                     res.status(500);
                     res.type("application/json");
-                    return "{\"error\":\"Unable to list directory\"}";
+                    return new JSONObject().put("error", "Unable to list directory").toString();
                 }
 
-                List<Map<String, Object>> fileList = new ArrayList<>();
+                JSONArray fileList = new JSONArray();
                 Arrays.sort(files, Comparator
                         .comparing((File file) -> !file.isDirectory()) // directories first
                         .thenComparing(File::getName, String.CASE_INSENSITIVE_ORDER)); // then by name
 
                 for (File file : files) {
-                    Map<String, Object> fileInfo = new HashMap<>();
+                    JSONObject fileInfo = new JSONObject();
                     fileInfo.put("name", file.getName());
                     fileInfo.put("type", file.isDirectory() ? "directory" : "file");
-                    fileInfo.put("size", file.isDirectory() ? null : file.length());
+                    fileInfo.put("size", file.isDirectory() ? JSONObject.NULL : file.length());
                     String relativePath = (requestPath.isEmpty() ? "" : requestPath + "/") + file.getName();
                     fileInfo.put("path", relativePath);
-                    fileList.add(fileInfo);
+                    fileList.put(fileInfo);
                 }
                 res.type("application/json");
-                return gson.toJson(fileList);
+                return fileList.toString();
             } else {
-                Map<String, Object> fileInfo = new HashMap<>();
+                JSONObject fileInfo = new JSONObject();
                 fileInfo.put("name", requestedFile.getName());
                 fileInfo.put("type", "file");
                 fileInfo.put("size", requestedFile.length());
                 fileInfo.put("contentType", Files.probeContentType(requestedFile.toPath()));
                 res.type("application/json");
-                return gson.toJson(fileInfo);
+                return fileInfo.toString();
             }
         } catch (IOException e) {
             res.status(500);
             res.type("application/json");
-            return "{\"error\":\"Internal Server Error\"}";
+            return new JSONObject().put("error", "Internal Server Error").toString();
         }
     }
 }

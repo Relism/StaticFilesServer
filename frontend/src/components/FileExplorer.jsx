@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import FileItem from './FileItem';
 import Breadcrumb from './Breadcrumb';
 
-const FileExplorer = () => {
+const FileExplorer = ({ config }) => {
     const { '*': path } = useParams(); // Capture the wildcard path
     const [files, setFiles] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -28,7 +28,7 @@ const FileExplorer = () => {
             }
         };
 
-        fetchFiles();
+        fetchFiles().then(r => r);
     }, [path, navigate]);
 
     if (loading) return <div className="spinner"></div>;
@@ -39,11 +39,11 @@ const FileExplorer = () => {
             <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center space-x-3">
                     <img
-                        src="https://static.pixel-services.com/static/assets/wemx/moonlogo_cropped.png"
+                        src={config.logoUrl}
                         alt="Logo"
                         className="logo w-8 h-8 rounded-lg"
                     />
-                    <h1 className="text-xl font-bold text-gray-900">File Explorer</h1>
+                    <h1 className="text-xl font-bold text-gray-900">{config.title}</h1>
                 </div>
             </div>
 
