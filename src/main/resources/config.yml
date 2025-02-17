@@ -1,0 +1,2 @@
+staticFilesDir: "/path/to/static/files"
+staticFilesEndpoint: "/static"
